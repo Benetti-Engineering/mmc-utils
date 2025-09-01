@@ -2103,6 +2103,8 @@ enum rpmb_op_type {
 	MMC_RPMB_READ_RESP = 0x05
 };
 
+#define RPMB_OP_RESULT_MASK		0x7f
+
 struct rpmb_frame {
 	u_int8_t  stuff[196];           /* Bytes 511 - 316 */
 	u_int8_t  key_mac[32];          /* Bytes 315 - 284 */
@@ -2295,7 +2297,7 @@ int do_rpmb_write_key(int nargs, char **argv)
 	}
 
 	/* Check RPMB response */
-	if (frame_out.result != 0) {
+	if ((frame_out.result & htobe16(RPMB_OP_RESULT_MASK)) != 0) {
 		printf("RPMB operation failed, retcode 0x%04x\n",
 			   be16toh(frame_out.result));
 		exit(1);
@@ -2321,7 +2323,7 @@ static int rpmb_read_counter(int dev_fd, unsigned int *cnt)
 	}
 
 	/* Check RPMB response */
-	if (frame_out.result != 0) {
+	if ((frame_out.result & htobe16(RPMB_OP_RESULT_MASK)) != 0) {
 		*cnt = 0;
 		return be16toh(frame_out.result);
 	}
@@ -2444,7 +2446,8 @@ int do_rpmb_read_block(int nargs, char **argv)
 	}
 
 	/* Check RPMB response */
-	if (frame_out_p[blocks_cnt - 1].result != 0) {
+	if ((frame_out_p[blocks_cnt - 1].result &
+	     htobe16(RPMB_OP_RESULT_MASK)) != 0) {
 		printf("RPMB operation failed, retcode 0x%04x\n",
 			   be16toh(frame_out_p[blocks_cnt - 1].result));
 		exit(1);
@@ -2575,7 +2578,7 @@ static int rpmb_auth_write(int nargs, char **argv, uint16_t addr,
 	}
 
 	/* Check RPMB response */
-	if (frame_out.result != 0) {
+	if ((frame_out.result & htobe16(RPMB_OP_RESULT_MASK)) != 0) {
 		printf("RPMB operation failed, retcode 0x%04x\n",
 		       be16toh(frame_out.result));
 	}
@@ -2623,7 +2626,7 @@ static int rpmb_auth_read(int nargs, char **argv)
 	}
 
 	/* Check RPMB response */
-	if (frame_out.result != 0) {
+	if ((frame_out.result & htobe16(RPMB_OP_RESULT_MASK)) != 0) {
 		printf("RPMB operation failed, retcode 0x%04x\n", be16toh(frame_out.result));
 		goto out;
 	}
@@ -2785,7 +2788,7 @@ int do_rpmb_write_block(int nargs, char **argv)
 	}
 
 	/* Check RPMB response */
-	if (frame_out.result != 0) {
+	if ((frame_out.result & htobe16(RPMB_OP_RESULT_MASK)) != 0) {
 		printf("RPMB operation failed, retcode 0x%04x\n",
 			   be16toh(frame_out.result));
 		exit(1);
