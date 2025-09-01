@@ -2358,6 +2358,8 @@ int do_rpmb_read_counter(int nargs, char **argv)
 	close(dev_fd);
 
 	printf("Counter value: 0x%08x\n", cnt);
+	if (cnt == 0xffffffff)
+		printf("WARNING: Counter expired, no further writes possible\n");
 
 	return ret;
 }
