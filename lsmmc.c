@@ -512,10 +512,10 @@ static void parse_bin(char *hexstr, char *fmt, ...)
 /* MMC/SD information parsing functions */
 static void print_sd_cid(struct config *config, char *cid)
 {
-	static const char *months[] = {
+	static const char *months[] = { "invalid0",
 		"jan", "feb", "mar", "apr", "may", "jun",
 		"jul", "aug", "sep", "oct", "nov", "dec",
-		"invalid0", "invalid1", "invalid2", "invalid3",
+		"invalid1", "invalid2", "invalid3",
 	};
 	unsigned int mid;
 	char oid[3];
@@ -570,10 +570,10 @@ static void print_sd_cid(struct config *config, char *cid)
 
 static void print_mmc_cid(struct config *config, char *cid)
 {
-	static const char *months[] = {
+	static const char *months[] = { "invalid0",
 		"jan", "feb", "mar", "apr", "may", "jun",
 		"jul", "aug", "sep", "oct", "nov", "dec",
-		"invalid0", "invalid1", "invalid2", "invalid3",
+		"invalid1", "invalid2", "invalid3",
 	};
 	unsigned int mid;
 	unsigned int cbx;
