@@ -589,7 +589,7 @@ static void print_mmc_cid(struct config *config, char *cid)
 
 	parse_bin(cid, "8u6r2u8u48a4u4u32u4u4u7u1r",
 		&mid, &cbx, &oid, &pnm[0], &prv_major, &prv_minor, &psn,
-		&mdt_year, &mdt_month, &crc);
+		&mdt_month, &mdt_year, &crc);
 
 	pnm[6] = '\0';
 
